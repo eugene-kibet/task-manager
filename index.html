@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>
+            My Task Manager
+        </title>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+
+    <body>
+        <h1>📝 Task Manager</h1>
+
+        <p class="Paragraph">Stay organized, one task at a time.</p>
+
+        <div class="Task-input">
+        <input type="text" id="task" name="task" placeholder="Enter a new task..." required />
+        <button type="button" id="add-button">Add</button>
+       </div>
+
+
+        <section id="task-list">
+            <p id="empty-message">Your task will appear here</p>
+        </section>
+
+        <div>
+            
+        <div class="Parent-container">
+            
+            <div class="Task-container">
+                <p class="Task-progress">Task completed</p>
+                <p class="Task-count">2/5</p>
+            </div>
+            
+            <div class="Progress-container">
+                <div class="Progress">Progress</div>
+                <div class="Progress-track">
+                    <div class="Progress-fill"></div>
+                </div>
+            </div>
+
+        </div>
+
+            <div class="Motivation-container">
+                <p class="Motivation">Keep going 🚀</p>
+                <p class="Motivation2">Small consistent progress beats perfection</p>
+            </div>
+
+        </div>
+
+         <script src="script.js"></script>
+    </body>
+</html>
