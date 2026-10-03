@@ -13,14 +13,18 @@ const emptymessage = document.getElementById("empty-message");
 // ZONE 2: HELPER FUNCTIONS & RESTORE LOGIC
 // ==========================================
 
-// Helper 1: Scans the screen and writes task text into localStorage
+// Helper 1: Scans the screen and writes task objects into localStorage
 function saveTasks() {
   const taskElements = tasklist.querySelectorAll("p");
   const tasksArray = [];
 
   taskElements.forEach(function (task) {
     if (task.id !== "empty-message") {
-      tasksArray.push(task.textContent);
+      // Store each task as an object with text and completion status
+      tasksArray.push({
+        text: task.textContent,
+        completed: task.classList.contains("completed")
+      });
     }
   });
 
@@ -28,15 +32,22 @@ function saveTasks() {
 }
 
 // Helper 2: Builds a complete task row and attaches it to the screen
-function createTaskElement(taskText) {
+function createTaskElement(taskText, isCompleted = false) {
   const taskitem = document.createElement("div");
 
   // --- GROUP A: THE TASK TEXT (<p>) ---
   const newTask = document.createElement("p");
   newTask.textContent = taskText;
 
+  // Restore strikethrough styling if the saved state was completed
+  if (isCompleted) {
+    newTask.classList.add("completed");
+  }
+
+  // Toggle completion on click and update localStorage immediately
   newTask.addEventListener("click", function () {
     newTask.classList.toggle("completed");
+    saveTasks();
   });
 
   taskitem.appendChild(newTask);
@@ -79,8 +90,9 @@ function createTaskElement(taskText) {
 // --- INITIAL LOAD: FETCH SAVED TASKS ON REFRESH ---
 const savedTasks = JSON.parse(localStorage.getItem("myTasks")) || [];
 
-savedTasks.forEach(function (taskText) {
-  createTaskElement(taskText);
+// Loop through stored objects and pass text + completed status
+savedTasks.forEach(function (task) {
+  createTaskElement(task.text, task.completed);
 });
 
 
@@ -90,7 +102,7 @@ savedTasks.forEach(function (taskText) {
 
 addbutton.addEventListener("click", function () {
   if (taskinput.value.trim() !== "") {
-    createTaskElement(taskinput.value.trim());
+    createTaskElement(taskinput.value.trim(), false);
     taskinput.value = "";
     saveTasks();
   }
