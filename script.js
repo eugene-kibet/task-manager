@@ -154,3 +154,25 @@ taskinput.addEventListener("keydown", function (e) {
     addbutton.click();
   }
 });
+
+const clearAllBtn = document.getElementById("clear-all-btn");
+
+clearAllBtn.addEventListener("click", function () {
+  const allCards = tasklist.querySelectorAll(".task-card");
+  
+  if (allCards.length === 0) {
+    return;
+  }
+
+  if (confirm("Are you sure you want to delete all tasks?")) {
+    allCards.forEach(function (card) {
+      card.remove();
+    });
+
+    if (!tasklist.contains(emptymessage)) {
+      tasklist.appendChild(emptymessage);
+    }
+
+    saveTasks();
+  }
+});
